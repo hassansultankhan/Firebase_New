@@ -34,7 +34,7 @@ class _AddDataState extends State<AddData> {
                 prefixIcon: Icon(
                   Icons.category
                 ), iconColor: Colors.indigo,
-                fillColor: Color.fromARGB(255, 200, 230, 201),
+                fillColor: Color.fromARGB(255, 255, 255, 255),
                 filled: true,
                 contentPadding: EdgeInsets.all(15),
                 ),

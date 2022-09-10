@@ -22,13 +22,59 @@ class _mainScreenState extends State<mainScreen> {
     _ref = FirebaseDatabase.instance.ref().child('Products').child('name');
   }
 
+  Widget _buildProductItem({required Map product}){
+    return Container(
+      margin: EdgeInsets.symmetric(vertical:10),
+      padding: EdgeInsets.all(10),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            children:[
+          
+          Icon(
+            Icons.card_travel,
+            size: 20,
+            color: Colors.amber
+          ),
+          Text("hello",
+            // product['name'],
+            style: TextStyle(fontSize: 16,
+            color:Colors.black,
+            fontWeight: FontWeight.w600),
+          )
+        ],
+        
+      ),
+        ]
+      ),
+    );
+    
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Products"),
         centerTitle: true,
       ),
-      body: FloatingActionButton(
+      body: Container(
+      height: double.infinity,
+      child: FirebaseAnimatedList(
+      query: _ref,
+      itemBuilder: (BuildContext context, DataSnapshot snapshot,
+      Animation<double> animation, int index
+      )
+      {
+            Map product = snapshot.value as Map;
+            
+            product['key'] = snapshot.key;
+             return _buildProductItem(product: product);
+          },
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.push(
