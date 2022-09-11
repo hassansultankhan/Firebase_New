@@ -19,38 +19,45 @@ class _mainScreenState extends State<mainScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _ref = FirebaseDatabase.instance.ref().child('Products').child('name');
+    _ref =
+        FirebaseDatabase.instance.ref().child('Products').orderByChild('name');
   }
 
-  Widget _buildProductItem({required Map product}){
+  Widget _buildProductItem({required Map product}) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical:10),
+      margin: EdgeInsets.symmetric(vertical: 10),
       padding: EdgeInsets.all(10),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Row(
-            children:[
-          
-          Icon(
-            Icons.card_travel,
-            size: 20,
-            color: Colors.amber
-          ),
-          Text("hello",
-            // product['name'],
-            style: TextStyle(fontSize: 16,
-            color:Colors.black,
-            fontWeight: FontWeight.w600),
-          )
-        ],
-        
-      ),
-        ]
-      ),
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.card_travel, size: 20, color: Colors.amber),
+                Text(
+                  product["name"],
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600),
+                ),
+                SizedBox(
+                  width: 30,
+                ),
+                InkWell(
+                    child: Icon(
+                      Icons.delete,
+                      size: 20,
+                      color: Colors.black38,
+                    ),
+                    onTap: () {
+                      reference.child(product['key']).remove();
+                      // .whenComplete(() => Navigator.pop(context));
+                    }),
+              ],
+            ),
+          ]),
     );
-    
   }
 
   Widget build(BuildContext context) {
@@ -60,17 +67,15 @@ class _mainScreenState extends State<mainScreen> {
         centerTitle: true,
       ),
       body: Container(
-      height: double.infinity,
-      child: FirebaseAnimatedList(
-      query: _ref,
-      itemBuilder: (BuildContext context, DataSnapshot snapshot,
-      Animation<double> animation, int index
-      )
-      {
+        height: double.infinity,
+        child: FirebaseAnimatedList(
+          query: _ref,
+          itemBuilder: (BuildContext context, DataSnapshot snapshot,
+              Animation<double> animation, int index) {
             Map product = snapshot.value as Map;
-            
+
             product['key'] = snapshot.key;
-             return _buildProductItem(product: product);
+            return _buildProductItem(product: product);
           },
         ),
       ),
