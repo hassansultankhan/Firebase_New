@@ -1,4 +1,5 @@
 import 'package:firebase_2/addContacts.dart';
+import 'package:firebase_2/editProduct.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
@@ -34,25 +35,29 @@ class _mainScreenState extends State<mainScreen> {
             Row(
               children: [
                 Icon(Icons.card_travel, size: 20, color: Colors.amber),
-                Text(
-                  product["name"],
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600),
+                InkWell(
+                  child: Text(
+                    product["name"],
+                    style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder:((context) => editProduct(productKey: product["key"],)), ));
+                  },
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 30,
                 ),
                 InkWell(
-                    child: Icon(
-                      Icons.delete,
+                    child: const Icon(
+                     Icons.delete,
                       size: 20,
                       color: Colors.black38,
                     ),
                     onTap: () {
                       reference.child(product['key']).remove();
-                      // .whenComplete(() => Navigator.pop(context));
                     }),
               ],
             ),
