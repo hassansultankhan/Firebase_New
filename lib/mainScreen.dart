@@ -5,8 +5,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 
 class mainScreen extends StatefulWidget {
-  const mainScreen({Key? key}) : super(key: key);
-
   @override
   State<mainScreen> createState() => _mainScreenState();
 }
@@ -43,8 +41,14 @@ class _mainScreenState extends State<mainScreen> {
                         color: Colors.black,
                         fontWeight: FontWeight.w600),
                   ),
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder:((context) => editProduct(productKey: product["key"],)), ));
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: ((context) => editProduct(
+                                product["key"],
+                              )),
+                        ));
                   },
                 ),
                 const SizedBox(
@@ -52,7 +56,7 @@ class _mainScreenState extends State<mainScreen> {
                 ),
                 InkWell(
                     child: const Icon(
-                     Icons.delete,
+                      Icons.delete,
                       size: 20,
                       color: Colors.black38,
                     ),
