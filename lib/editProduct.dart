@@ -31,7 +31,8 @@ class _editProductState extends State<editProduct> {
           SizedBox(
             height: 30,
           ),
-          TextFormField(
+          
+        TextFormField(
             autofocus: true,
             controller: productController,
             decoration: InputDecoration(
@@ -44,7 +45,9 @@ class _editProductState extends State<editProduct> {
               labelText: productController.text,
             ),
           ),
-        ]),
+          ElevatedButton(onPressed:()=> saveinfo(),  child: Text("Edit")),
+        ]
+        ),
       ),
     );
   }
@@ -55,5 +58,14 @@ class _editProductState extends State<editProduct> {
     Map product = event.snapshot.value as Map;
     productController.text = product['name'];
     // print(product["name"]);
+  }
+  saveinfo(){
+    String name= productController.text;
+
+    Map<String, String> product = {
+      'name' : name,
+    };
+    _ref.child(widget.productKey).update(product).then((value) 
+    {Navigator.pop(context);});
   }
 }
